@@ -1,0 +1,18 @@
+{
+  "DESIGN_NAME": "fpc_top",
+  "VERILOG_FILES": [
+    "dir::../../rtl/fpc_rst_sync.v",
+    "dir::../../rtl/fpc_attitude_est.v",
+    "dir::../../rtl/fpc_pid.v",
+    "dir::../../rtl/fpc_pwm.v",
+    "dir::../../rtl/fpc_safety.v",
+    "dir::../../rtl/fpc_top.v"
+  ],
+  "CLOCK_PORT": "clk",
+  "CLOCK_PERIOD": 20,
+  "FP_SIZING": "relative",
+  "FP_CORE_UTIL": 40,
+  "PL_TARGET_DENSITY_PCT": 50,
+  "PNR_SDC_FILE": "dir::../../constraints/fpc_top.sdc",
+  "SIGNOFF_SDC_FILE": "dir::../../constraints/fpc_top.sdc"
+}

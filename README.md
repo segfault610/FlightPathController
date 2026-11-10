@@ -31,9 +31,16 @@ The testbench closes the loop around a behavioural plant (damped rotating body, 
 recovery from a 0.3 rad offset, rejection of a constant disturbance torque, watchdog trip on sensor loss,
 over-angle trip, and fault clearing. Expected last line: `TB_RESULT: PASS`.
 
+## Physical design (IHP SG13G2, open PDK)
+```
+flow/ihp_sg13g2/run.sh        # needs Docker; PDK fetch command is in the script header
+```
+![layout](docs/ihp_sg13g2_layout.png)
+
 ## Status
-- Done and passing here: lint, simulation (10 checks), generic synthesis (about 1.8k gates, 162 flops).
-- Not done: timing analysis (no STA tool here), any Synopsys tool run (scripts are templates, see
+- Done and passing here: lint, simulation (10 checks), generic synthesis, and a full RTL-to-GDS run on the open
+  IHP SG13G2 PDK: DRC-clean, LVS-clean, timing met at 50 MHz (details in `flow/ihp_sg13g2/RESULTS.md`).
+- Not done: pad ring and tape-out sign-off, any Synopsys tool run (scripts are templates, see
   `docs/SYNOPSYS_MIGRATION.md`), FPGA bring-up, real sensor models.
 - Known simplifications are marked `shortcut:` in the RTL.
 
