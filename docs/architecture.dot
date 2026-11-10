@@ -1,0 +1,37 @@
+digraph fpc {
+  rankdir=LR; fontname="Helvetica"; nodesep=0.45; ranksep=0.8; compound=true;
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=12, margin="0.18,0.10"];
+  edge [fontname="Helvetica", fontsize=10];
+  labelloc=t; fontsize=16;
+  label="Flight Path Controller: one-axis digital core and planned analog / mixed-signal boundary";
+
+  subgraph cluster_in {
+    label="Analog / mixed-signal (planned, not designed yet)"; style="dashed"; color="#888888"; fontsize=11;
+    imu  [label="Sensor front end\nIMU interface / ADC", fillcolor="#f2f2f2", style="rounded,filled,dashed"];
+    pll  [label="Clock / PLL\nPower-on-reset", fillcolor="#f2f2f2", style="rounded,filled,dashed"];
+  }
+
+  subgraph cluster_core {
+    label="Digital core: fpc_top (done: simulated, laid out on IHP SG13G2)"; style="solid"; color="#2b6cb0"; fontsize=11;
+    rst [label="Reset sync\n(feeds all blocks)", fillcolor="#e6f0fa"];
+    est [label="Attitude estimator\nfixed-gain Kalman\nangle + gyro bias", fillcolor="#e6f0fa"];
+    pid [label="PID controller\nclamped integrator", fillcolor="#e6f0fa"];
+    pwm [label="PWM\npwm + dir", fillcolor="#e6f0fa"];
+    saf [label="Safety monitor\nwatchdog + angle limit", fillcolor="#fde8e8"];
+  }
+
+  subgraph cluster_out {
+    label="Analog (planned)"; style="dashed"; color="#888888"; fontsize=11;
+    drv [label="Gate driver\nH-bridge / motor", fillcolor="#f2f2f2", style="rounded,filled,dashed"];
+  }
+
+  imu -> est [label="sample_valid, gyro,\nmeas_angle"];
+  pll -> rst [label="clk, rst_n"];
+  est -> pid [label="angle, rate"];
+  pid -> pwm [label="ctrl_out (12 bit)"];
+  pwm -> drv [label="pwm, dir"];
+  est -> saf [label="angle", style=dashed];
+  imu -> saf [label="sample_valid\n(timeout watch)", style=dashed];
+  saf -> pid [label="enable", color="#c53030", fontcolor="#c53030"];
+  saf -> pwm [label="enable", color="#c53030", fontcolor="#c53030"];
+}

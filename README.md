@@ -11,6 +11,8 @@ end; the analog / mixed-signal parts are only specified as interfaces (see `docs
                                         safety monitor (watchdog + angle limit)
 ```
 
+![architecture](docs/architecture.png)
+
 | Block | File | What it does |
 |---|---|---|
 | Attitude estimator | `rtl/fpc_attitude_est.v` | Fixed-gain Kalman filter: fuses gyro rate and an angle measurement, estimates gyro bias |
