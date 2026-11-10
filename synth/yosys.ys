@@ -1,0 +1,5 @@
+read_verilog -sv rtl/fpc_rst_sync.v rtl/fpc_attitude_est.v rtl/fpc_pid.v rtl/fpc_pwm.v rtl/fpc_safety.v rtl/fpc_top.v
+hierarchy -check -top fpc_top
+synth -top fpc_top -flatten
+tee -o build/synth_stat.txt stat
+write_verilog -noattr build/fpc_top_generic.v
